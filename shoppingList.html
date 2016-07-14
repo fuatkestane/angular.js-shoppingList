@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <title>My Shopping List</title>
+    <script src="js/angular/angular.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+<body>
+
+<script>
+var app = angular.module("myShoppingList", []);
+app.controller("myCtrl", function($scope) {
+    $scope.products = ["Milk", "Bread", "Cheese"];
+    $scope.addItem = function () {
+        $scope.errortext = "";
+        if (!$scope.addMe) {return;}
+        if ($scope.products.indexOf($scope.addMe) == -1) {
+            $scope.products.push($scope.addMe);
+        } else {
+            $scope.errortext = "The item is already in your shopping list.";
+        }
+    }
+    $scope.removeItem = function (x) {
+        $scope.errortext = "";
+        $scope.products.splice(x, 1);
+    }
+});
+</script>
+
+<div ng-app="myShoppingList" ng-cloak ng-controller="myCtrl" class="fk-card-2 fk-margin" style="max-width:400px;">
+  <header class="fk-container fk-light-grey fk-padding-hor-16">
+    <h3>My Shopping List</h3>
+  </header>
+  <ul class="fk-ul">
+    <li ng-repeat="x in products" class="fk-padding-hor-16">{{x}}<span ng-click="removeItem($index)" style="cursor:pointer;" class="fk-right fk-margin-right">x</span></li>
+  </ul>
+  <div class="fk-container fk-light-grey fk-padding-hor-16">
+    <div class="fk-row fk-margin-top">
+      <div class="fk-col s10">
+        <input placeholder="Add shopping items here" ng-model="addMe" class="fk-input fk-border fk-padding">
+      </div>
+      <div class="fk-col s2">
+        <button ng-click="addItem()" class="fk-btn fk-padding">Add</button>
+      </div>
+    </div>
+    <p class="fk-padding-left fk-text-red">{{errortext}}</p>
+  </div>
+</div>
+
+</body>
+</html>
+
